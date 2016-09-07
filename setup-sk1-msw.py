@@ -30,6 +30,8 @@ Usage:
 import os, sys, shutil, platform
 from zipfile import ZIP_DEFLATED
 
+sys.path.insert(0, '../sk1-wx')
+
 import buildutils
 
 def get_os_prefix():
@@ -91,13 +93,13 @@ Copyright (C) 2007-2016 by Igor E. Novikov
 ############################################################
 # Build data
 ############################################################
-src_path = 'src'
+src_path = '../sk1-wx/src'
 res_path = get_res_path()
 include_path = os.path.join(res_path, 'include')
 lib_path = [os.path.join(res_path, 'libs'), ]
 modules = []
 
-dirs = buildutils.get_dirs_tree('src/sk1/share')
+dirs = buildutils.get_dirs_tree('../sk1-wx/src/sk1/share')
 share_dirs = []
 for item in dirs: share_dirs.append(os.path.join(item[8:], '*.*'))
 
@@ -202,7 +204,7 @@ if PORTABLE_PACKAGE:
 
     for root, dirs, files in os.walk(portable_name):
         for item in files:
-            if item[-3:]=='.py': continue
+            if item[-3:] == '.py': continue
             path = os.path.join(root, item)
             print 'Compressing', path
             ziph.write(path)
