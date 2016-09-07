@@ -9,7 +9,10 @@ sK1 Project (http://sk1project.org),
 Copyright (C) 2004-2015 by Igor E. Novikov
 
 This repo contains MS Windows build files.
- 
+
+To build sources you need checkout this repo into sk1-wx-msw folder and
+sk1-wx repo into sk1-wx folder.
+
 --------------------------------------------------------------------------
  to build package:       python setup-sk1-msw.py build
 --------------------------------------------------------------------------
