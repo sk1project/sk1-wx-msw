@@ -173,7 +173,7 @@ if not UPDATE_MODULES:
 # automating build and native extension copying
 # into package directory
 ############################################################
-if UPDATE_MODULES: buildutils.copy_modules(modules)
+if UPDATE_MODULES: buildutils.copy_modules(modules, src_path)
 
 ############################################################
 # Implementation of bdist_portable command
