@@ -49,4 +49,4 @@ os.chdir(os.path.join(cur_path, 'dlls'))
 
 import sk1
 
-sk1.sk1_run()
+sk1.sk1_run(cur_path)
