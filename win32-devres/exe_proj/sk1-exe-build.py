@@ -1,7 +1,14 @@
 import sys
 
+SCRIPT = "src\\sk1.py"
+
 if len(sys.argv) == 1:
 	sys.argv += ['py2exe', ]
+elif len(sys.argv) == 2:
+	sys.argv[1] = 'py2exe'
+	SCRIPT = "src\\sk1_portable.py"
+	
+print SCRIPT
 
 from distutils.core import setup
 import py2exe
@@ -26,13 +33,13 @@ setup(
 						'compressed': True,
 						'includes':INCLUDES,
 						}},
-	windows=[{'script': "src\\sk1.py",
+	windows=[{'script': SCRIPT,
 # 	console=[{'script': "src\\sk1.py",
 			"icon_resources": [(1, "src\\sk1.ico")]
 			}],
 	data_files=data_files,
 	zipfile=None,
 	name="sK1",
-	version="2.0RC1",
+	version="2.0RC2",
 	description="Vector graphics editor",
 	)
