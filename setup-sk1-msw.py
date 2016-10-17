@@ -59,7 +59,7 @@ CLEAR_BUILD = False
 # Package description
 ############################################################
 NAME = 'sk1'
-VERSION = '2.0RC1'
+VERSION = '2.0RC2'
 DESCRIPTION = 'Vector graphics editor for prepress'
 AUTHOR = 'Igor E. Novikov'
 AUTHOR_EMAIL = 'igor.e.novikov@gmail.com'
@@ -101,11 +101,15 @@ modules = []
 
 dirs = buildutils.get_dirs_tree('../sk1-wx/src/sk1/share')
 share_dirs = []
-for item in dirs: share_dirs.append(os.path.join(item[8:], '*.*'))
+for item in dirs: 
+    path=item.split('/sk1/')[1]
+    share_dirs.append(os.path.join(path, '*.*'))
 
 package_data = {
 'sk1': share_dirs,
 }
+
+EXCLUDES = ['sword', ]
 
 ############################################################
 # Main build procedure
@@ -141,6 +145,8 @@ modules += make_modules(src_path, include_path, lib_path)
 ############################################################
 from distutils.core import setup
 
+abs_path=os.path.abspath(src_path)
+print buildutils.get_source_structure(abs_path, excludes=EXCLUDES)
 
 setup(name=NAME,
     version=VERSION,
@@ -154,8 +160,8 @@ setup(name=NAME,
     download_url=DOWNLOAD_URL,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
-    packages=buildutils.get_source_structure(),
-    package_dir=buildutils.get_package_dirs(),
+    packages=buildutils.get_source_structure(abs_path, excludes=EXCLUDES),
+    package_dir=buildutils.get_package_dirs(abs_path, excludes=EXCLUDES),
     package_data=package_data,
     data_files=data_files,
     scripts=scripts,
