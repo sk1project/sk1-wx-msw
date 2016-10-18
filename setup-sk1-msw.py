@@ -146,7 +146,6 @@ modules += make_modules(src_path, include_path, lib_path)
 from distutils.core import setup
 
 abs_path=os.path.abspath(src_path)
-print buildutils.get_source_structure(abs_path, excludes=EXCLUDES)
 
 setup(name=NAME,
     version=VERSION,
