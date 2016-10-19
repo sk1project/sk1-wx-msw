@@ -232,6 +232,10 @@ if MSI_PACKAGE:
     PKGS = ['sk1', 'uc2', 'wal']
     msi_dir_name='msi_build'
     libdir = os.path.join('build', 'lib' + get_build_suffix())
+    if os.path.exists(msi_dir_name):
+        shutil.rmtree(msi_dir_name, True)
+    if os.path.exists('out'):
+        shutil.rmtree('out', True)
 
     os.mkdir(msi_dir_name)
   
@@ -251,9 +255,13 @@ if MSI_PACKAGE:
         print 'Copying tree', src
         shutil.copytree(src, os.path.join(msi_libs, item))
         
-    for root, dirs, files in os.walk(portable_name):
+    for root, dirs, files in os.walk(msi_dir_name):
         for item in files:
             if item[-3:] == '.py': 
                 os.remove(os.path.join(root, item))
+                
+    os.system('mm.cmd sk1.mm P')           
+                
+    shutil.rmtree(msi_dir_name, True)
                 
 if CLEAR_BUILD: buildutils.clear_msw_build()
