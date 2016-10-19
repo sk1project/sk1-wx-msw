@@ -53,6 +53,7 @@ def get_build_suffix():
 ############################################################
 UPDATE_MODULES = False
 PORTABLE_PACKAGE = False
+MSI_PACKAGE = False
 CLEAR_BUILD = False
 
 ############################################################
@@ -125,8 +126,13 @@ if len(sys.argv) > 1:
         PORTABLE_PACKAGE = True
         CLEAR_BUILD = True
         sys.argv[1] = 'build'
+        
+    elif sys.argv[1] == 'bdist_msi':
+        MSI_PACKAGE = True
+        CLEAR_BUILD = True
+        sys.argv[1] = 'build'
 
-    if sys.argv[1] == 'build_update':
+    elif sys.argv[1] == 'build_update':
         UPDATE_MODULES = True
         CLEAR_BUILD = True
         sys.argv[1] = 'build'
@@ -215,5 +221,39 @@ if PORTABLE_PACKAGE:
             ziph.write(path)
     ziph.close()
     shutil.rmtree(portable_name, True)
+    
+############################################################
+# Implementation of bdist_msi command
+############################################################
+if MSI_PACKAGE:
+    print 40 * '#'
+    print 'MSI_PACKAGE'
+    print 40 * '#'
+    PKGS = ['sk1', 'uc2', 'wal']
+    msi_dir_name='msi_build'
+    libdir = os.path.join('build', 'lib' + get_build_suffix())
 
+    os.mkdir(msi_dir_name)
+  
+    from zipfile import ZipFile
+    portable = os.path.join(get_res_path(), 'portable.zip')
+    print 'Extracting', portable
+    ZipFile(portable, 'r').extractall(msi_dir_name)
+    
+    os.remove(os.path.join(msi_dir_name,'sk1.exe'))
+    exe_file = os.path.join(get_res_path(), 'sk1_msi.zip')
+    print 'Extracting', exe_file
+    ZipFile(exe_file, 'r').extractall(msi_dir_name)
+    
+    msi_libs = os.path.join(msi_dir_name, 'libs')
+    for item in PKGS:
+        src = os.path.join(libdir, item)
+        print 'Copying tree', src
+        shutil.copytree(src, os.path.join(msi_libs, item))
+        
+    for root, dirs, files in os.walk(portable_name):
+        for item in files:
+            if item[-3:] == '.py': 
+                os.remove(os.path.join(root, item))
+                
 if CLEAR_BUILD: buildutils.clear_msw_build()
