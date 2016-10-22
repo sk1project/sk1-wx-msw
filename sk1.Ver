@@ -11,7 +11,7 @@
 ; ProductName = sK1 2.0
 ; DESCRIPTION = Open source vector graphics editor
 ; Licence     = gpl_v3.rtf
-; Installed   = VersionNT >= 501
+; Installed   = WINDOWS_ALL
 ; Guid.UpgradeCode = {3AC4B4FF-10C4-4B8F-81AD-BAC3238BF693}
 ; MsiName     = sk1
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
