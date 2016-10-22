@@ -3,7 +3,7 @@
 ;    MODULE NAME:   SK1.VER
 ;
 ;        $Author:   USER "Igor E.Novikov"  $
-;          $Date:   19 Oct 2016 17:25:32  $
+;          $Date:   22 Oct 2016 22:22:22  $
 ;
 ;    DESCRIPTION:   sK1 MSI installer.
 ;
@@ -11,7 +11,7 @@
 ; ProductName = sK1 2.0
 ; DESCRIPTION = Open source vector graphics editor
 ; Licence     = gpl_v3.rtf
-; Installed   = WINDOWS_ALL
+; Installed   = VersionNT >= 501
 ; Guid.UpgradeCode = {3AC4B4FF-10C4-4B8F-81AD-BAC3238BF693}
 ; MsiName     = sk1
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -19,7 +19,7 @@
 
 
 ;############################################################################
-VERSION : 2.0.02
+VERSION : 2.0.03
 DATE    : 19 Oct 2016
 CHANGES : This is a second release candidate of sK1 2.0
 
