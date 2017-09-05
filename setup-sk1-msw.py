@@ -28,6 +28,7 @@ Usage:
 """
 
 import os, sys, shutil, platform
+import json
 from zipfile import ZIP_DEFLATED
 
 sys.path.insert(0, '../sk1-wx')
@@ -50,6 +51,9 @@ def get_build_suffix():
 def is_64bit():
 	return get_build_suffix()=='.win-amd64-2.7'
 
+if is_64bit():
+	exec compile('envs=' + open('amd64.json', 'rb').read(), '<string>', 'exec')
+	os.environ.update(envs)
 
 ############################################################
 # Flags
