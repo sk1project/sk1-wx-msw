@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-
-#   Setup script for sK1 2.x on MS Windows
 #
-#	 Copyright (C) 2016 by Igor E. Novikov
+#  Setup script for sK1 2.x on MS Windows
 #
-#	 This program is free software: you can redistribute it and/or modify
-#	 it under the terms of the GNU General Public License as published by
-#	 the Free Software Foundation, either version 3 of the License, or
-#	 (at your option) any later version.
+#  Copyright (C) 2016 by Igor E. Novikov
 #
-#	 This program is distributed in the hope that it will be useful,
-#	 but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	 GNU General Public License for more details.
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
 #
-#	 You should have received a copy of the GNU General Public License
-#	 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 Usage: 
@@ -24,36 +24,46 @@ Usage:
 --------------------------------------------------------------------------
  to create portable distribution:   python setup-sk1-msw.py bdist_portable
 --------------------------------------------------------------------------
+ to create MSI distribution:   python setup-sk1-msw.py bdist_msi
+--------------------------------------------------------------------------
  Help on available distribution formats: --help-formats
 """
 
-import os, sys, shutil, platform
-import json
+import os
+import platform
+import shutil
+import sys
 from zipfile import ZIP_DEFLATED
 
 sys.path.insert(0, '../sk1-wx')
 
 import buildutils
 
+
 def get_os_prefix():
-	if platform.architecture()[0] == '32bit':
-		return 'win32'
-	return 'win64'
+    if platform.architecture()[0] == '32bit':
+        return 'win32'
+    return 'win64'
+
 
 def get_res_path():
-	return get_os_prefix() + '-devres'
+    return get_os_prefix() + '-devres'
+
 
 def get_build_suffix():
-	if platform.architecture()[0] == '32bit':
-		return '.win32-2.7'
-	return '.win-amd64-2.7'
-   
-def is_64bit():
-	return get_build_suffix()=='.win-amd64-2.7'
+    if platform.architecture()[0] == '32bit':
+        return '.win32-2.7'
+    return '.win-amd64-2.7'
 
+
+def is_64bit():
+    return get_build_suffix() == '.win-amd64-2.7'
+
+
+# Upload 64bit environment variables
 if is_64bit():
-	exec compile('envs=' + open('amd64.json', 'rb').read(), '<string>', 'exec')
-	os.environ.update(envs)
+    exec compile('envs=' + open('amd64.json', 'rb').read(), '<string>', 'exec')
+    os.environ.update(envs)
 
 ############################################################
 # Flags
@@ -67,7 +77,7 @@ CLEAR_BUILD = False
 # Package description
 ############################################################
 NAME = 'sk1'
-VERSION = '2.0RC2'
+VERSION = '2.0rc3'
 DESCRIPTION = 'Vector graphics editor for prepress'
 AUTHOR = 'Igor E. Novikov'
 AUTHOR_EMAIL = 'igor.e.novikov@gmail.com'
@@ -77,17 +87,17 @@ LICENSE = 'GPL v3'
 URL = 'http://sk1project.org'
 DOWNLOAD_URL = URL
 CLASSIFIERS = [
-'Development Status :: 5 - Stable',
-'Environment :: Desktop',
-'Intended Audience :: End Users/Desktop',
-'License :: OSI Approved :: LGPL v2',
-'License :: OSI Approved :: GPL v3',
-'Operating System :: POSIX',
-'Operating System :: MacOS :: MacOS X',
-'Operating System :: Microsoft :: Windows',
-'Programming Language :: Python',
-'Programming Language :: C',
-"Topic :: Multimedia :: Graphics :: Editors :: Vector-Based",
+    'Development Status :: 5 - Stable',
+    'Environment :: Desktop',
+    'Intended Audience :: End Users/Desktop',
+    'License :: OSI Approved :: LGPL v2',
+    'License :: OSI Approved :: GPL v3',
+    'Operating System :: POSIX',
+    'Operating System :: MacOS :: MacOS X',
+    'Operating System :: Microsoft :: Windows',
+    'Programming Language :: Python',
+    'Programming Language :: C',
+    "Topic :: Multimedia :: Graphics :: Editors :: Vector-Based",
 ]
 LONG_DESCRIPTION = '''
 sK1 is an open source vector graphics editor similar to CorelDRAW, 
@@ -109,12 +119,12 @@ modules = []
 
 dirs = buildutils.get_dirs_tree('../sk1-wx/src/sk1/share')
 share_dirs = []
-for item in dirs: 
-	path=item.split('/sk1/')[1]
-	share_dirs.append(os.path.join(path, '*.*'))
+for item in dirs:
+    path = item.split('/sk1/')[1]
+    share_dirs.append(os.path.join(path, '*.*'))
 
 package_data = {
-'sk1': share_dirs,
+    'sk1': share_dirs,
 }
 
 EXCLUDES = ['sword', ]
@@ -124,25 +134,25 @@ EXCLUDES = ['sword', ]
 ############################################################
 
 if len(sys.argv) == 1:
-	print 'Please specify build options!'
-	print __doc__
-	sys.exit(0)
+    print 'Please specify build options!'
+    print __doc__
+    sys.exit(0)
 
 if len(sys.argv) > 1:
-	if sys.argv[1] == 'bdist_portable':
-		PORTABLE_PACKAGE = True
-		CLEAR_BUILD = True
-		sys.argv[1] = 'build'
-		
-	elif sys.argv[1] == 'bdist_msi':
-		MSI_PACKAGE = True
-		CLEAR_BUILD = True
-		sys.argv[1] = 'build'
+    if sys.argv[1] == 'bdist_portable':
+        PORTABLE_PACKAGE = True
+        CLEAR_BUILD = True
+        sys.argv[1] = 'build'
 
-	elif sys.argv[1] == 'build_update':
-		UPDATE_MODULES = True
-		CLEAR_BUILD = True
-		sys.argv[1] = 'build'
+    elif sys.argv[1] == 'bdist_msi':
+        MSI_PACKAGE = True
+        CLEAR_BUILD = True
+        sys.argv[1] = 'build'
+
+    elif sys.argv[1] == 'build_update':
+        UPDATE_MODULES = True
+        CLEAR_BUILD = True
+        sys.argv[1] = 'build'
 
 data_files = scripts = []
 
@@ -158,32 +168,33 @@ modules += make_modules(src_path, include_path, lib_path)
 ############################################################
 from distutils.core import setup
 
-abs_path=os.path.abspath(src_path)
+abs_path = os.path.abspath(src_path)
 
-setup(name=NAME,
-	version=VERSION,
-	description=DESCRIPTION,
-	author=AUTHOR,
-	author_email=AUTHOR_EMAIL,
-	maintainer=MAINTAINER,
-	maintainer_email=MAINTAINER_EMAIL,
-	license=LICENSE,
-	url=URL,
-	download_url=DOWNLOAD_URL,
-	long_description=LONG_DESCRIPTION,
-	classifiers=CLASSIFIERS,
-	packages=buildutils.get_source_structure(abs_path, excludes=EXCLUDES),
-	package_dir=buildutils.get_package_dirs(abs_path, excludes=EXCLUDES),
-	package_data=package_data,
-	data_files=data_files,
-	scripts=scripts,
-	ext_modules=modules)
+setup(
+    name=NAME,
+    version=VERSION,
+    description=DESCRIPTION,
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL,
+    maintainer=MAINTAINER,
+    maintainer_email=MAINTAINER_EMAIL,
+    license=LICENSE,
+    url=URL,
+    download_url=DOWNLOAD_URL,
+    long_description=LONG_DESCRIPTION,
+    classifiers=CLASSIFIERS,
+    packages=buildutils.get_source_structure(abs_path, excludes=EXCLUDES),
+    package_dir=buildutils.get_package_dirs(abs_path, excludes=EXCLUDES),
+    package_data=package_data,
+    data_files=data_files,
+    scripts=scripts,
+    ext_modules=modules)
 
 ############################################################
 # .py source compiling
 ############################################################
 if not UPDATE_MODULES:
-	buildutils.compile_sources()
+    buildutils.compile_sources()
 
 ############################################################
 # This section for developing purpose only
@@ -191,85 +202,93 @@ if not UPDATE_MODULES:
 # automating build and native extension copying
 # into package directory
 ############################################################
-if UPDATE_MODULES: buildutils.copy_modules(modules, src_path)
+if UPDATE_MODULES:
+    buildutils.copy_modules(modules, src_path)
 
 ############################################################
 # Implementation of bdist_portable command
 ############################################################
 if PORTABLE_PACKAGE:
-	print 40 * '#'
-	print 'PORTABLE_PACKAGE'
-	print 40 * '#'
-	PKGS = ['sk1', 'uc2', 'wal']
-	portable_name = '%s-%s-%s-portable' % (NAME, VERSION, get_os_prefix())
-	libdir = os.path.join('build', 'lib' + get_build_suffix())
+    print 40 * '#'
+    print 'PORTABLE_PACKAGE'
+    print 40 * '#'
+    PKGS = ['sk1', 'uc2', 'wal']
+    portable_name = '%s-%s-%s-portable' % (NAME, VERSION, get_os_prefix())
+    libdir = os.path.join('build', 'lib' + get_build_suffix())
 
-	os.mkdir(portable_name)
+    os.mkdir(portable_name)
 
-	from zipfile import ZipFile
-	portable = os.path.join(get_res_path(), 'portable.zip')
-	print 'Extracting', portable
-	ZipFile(portable, 'r').extractall(portable_name)
-	portable_libs = os.path.join(portable_name, 'libs')
-	for item in PKGS:
-		src = os.path.join(libdir, item)
-		print 'Copying tree', src
-		shutil.copytree(src, os.path.join(portable_libs, item))
+    from zipfile import ZipFile
 
-	if not os.path.isdir('dist'): os.mkdir('dist')
-	portable = os.path.join('dist', portable_name + '.zip')
-	ziph = ZipFile(portable, 'w', ZIP_DEFLATED)
+    portable = os.path.join(get_res_path(), 'portable.zip')
+    print 'Extracting', portable
+    ZipFile(portable, 'r').extractall(portable_name)
+    portable_libs = os.path.join(portable_name, 'libs')
+    for item in PKGS:
+        src = os.path.join(libdir, item)
+        print 'Copying tree', src
+        shutil.copytree(src, os.path.join(portable_libs, item))
 
-	for root, dirs, files in os.walk(portable_name):
-		for item in files:
-			if item[-3:] == '.py': continue
-			path = os.path.join(root, item)
-			print 'Compressing', path
-			ziph.write(path)
-	ziph.close()
-	shutil.rmtree(portable_name, True)
-	
+    if not os.path.isdir('dist'):
+        os.mkdir('dist')
+    portable = os.path.join('dist', portable_name + '.zip')
+    ziph = ZipFile(portable, 'w', ZIP_DEFLATED)
+
+    for root, dirs, files in os.walk(portable_name):
+        for item in files:
+            if item[-3:] == '.py':
+                continue
+            path = os.path.join(root, item)
+            print 'Compressing', path
+            ziph.write(path)
+    ziph.close()
+    shutil.rmtree(portable_name, True)
+
 ############################################################
 # Implementation of bdist_msi command
 ############################################################
 if MSI_PACKAGE:
-	print 40 * '#'
-	print 'MSI_PACKAGE'
-	print 40 * '#'
-	PKGS = ['sk1', 'uc2', 'wal']
-	msi_dir_name='msi_build'
-	libdir = os.path.join('build', 'lib' + get_build_suffix())
-	if os.path.exists(msi_dir_name):
-		shutil.rmtree(msi_dir_name, True)
-	if os.path.exists('out'):
-		shutil.rmtree('out', True)
+    print 40 * '#'
+    print 'MSI_PACKAGE'
+    print 40 * '#'
+    PKGS = ['sk1', 'uc2', 'wal']
+    msi_dir_name = 'msi_build'
+    libdir = os.path.join('build', 'lib' + get_build_suffix())
+    if os.path.exists(msi_dir_name):
+        shutil.rmtree(msi_dir_name, True)
+    if os.path.exists('out'):
+        shutil.rmtree('out', True)
 
-	os.mkdir(msi_dir_name)
-  
-	from zipfile import ZipFile
-	portable = os.path.join(get_res_path(), 'portable.zip')
-	print 'Extracting', portable
-	ZipFile(portable, 'r').extractall(msi_dir_name)
-	
-	os.remove(os.path.join(msi_dir_name,'sk1.exe'))
-	exe_file = os.path.join(get_res_path(), 'sk1_msi.zip')
-	print 'Extracting', exe_file
-	ZipFile(exe_file, 'r').extractall(msi_dir_name)
-	
-	msi_libs = os.path.join(msi_dir_name, 'libs')
-	for item in PKGS:
-		src = os.path.join(libdir, item)
-		print 'Copying tree', src
-		shutil.copytree(src, os.path.join(msi_libs, item))
-		
-	for root, dirs, files in os.walk(msi_dir_name):
-		for item in files:
-			if item[-3:] == '.py': 
-				os.remove(os.path.join(root, item))
-	
-	if is_64bit(): os.system('mm.cmd sk1_x64.mm P')		  
-	else: os.system('mm.cmd sk1.mm P')		   
-				
-	shutil.rmtree(msi_dir_name, True)
-				
-if CLEAR_BUILD: buildutils.clear_msw_build()
+    os.mkdir(msi_dir_name)
+
+    from zipfile import ZipFile
+
+    portable = os.path.join(get_res_path(), 'portable.zip')
+    print 'Extracting', portable
+    ZipFile(portable, 'r').extractall(msi_dir_name)
+
+    os.remove(os.path.join(msi_dir_name, 'sk1.exe'))
+    exe_file = os.path.join(get_res_path(), 'sk1_msi.zip')
+    print 'Extracting', exe_file
+    ZipFile(exe_file, 'r').extractall(msi_dir_name)
+
+    msi_libs = os.path.join(msi_dir_name, 'libs')
+    for item in PKGS:
+        src = os.path.join(libdir, item)
+        print 'Copying tree', src
+        shutil.copytree(src, os.path.join(msi_libs, item))
+
+    for root, dirs, files in os.walk(msi_dir_name):
+        for item in files:
+            if item[-3:] == '.py':
+                os.remove(os.path.join(root, item))
+
+    if is_64bit():
+        os.system('mm.cmd sk1_x64.mm P')
+    else:
+        os.system('mm.cmd sk1.mm P')
+
+    shutil.rmtree(msi_dir_name, True)
+
+if CLEAR_BUILD:
+    buildutils.clear_msw_build()
