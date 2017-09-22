@@ -283,12 +283,23 @@ if MSI_PACKAGE:
             if item[-3:] == '.py':
                 os.remove(os.path.join(root, item))
 
+    mm_name = 'sk1.mm'
     if is_64bit():
-        os.system('mm.cmd sk1_x64.mm P')
-    else:
-        os.system('mm.cmd sk1.mm P')
+        mm_name = 'sk1_x64.mm'
+    os.system('mm.cmd % P' % mm_name)
+
+    src_msi = os.path.join('out', mm_name, 'MSI', 'sk1.msi')
+    if not os.path.isfile(src_msi):
+        sys.exit(1)
 
     shutil.rmtree(msi_dir_name, True)
+    if not os.path.isdir('dist'):
+        os.mkdir('dist')
+    msi_name = '%s-%s-%s.msi' % (NAME, VERSION, get_os_prefix())
+    dst_msi = os.path.join('dist', msi_name)
+
+    shutil.copy(src_msi, dst_msi)
+    shutil.rmtree('out', True)
 
 if CLEAR_BUILD:
     buildutils.clear_msw_build()
