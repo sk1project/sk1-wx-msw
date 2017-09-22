@@ -286,7 +286,7 @@ if MSI_PACKAGE:
     mm_name = 'sk1.mm'
     if is_64bit():
         mm_name = 'sk1_x64.mm'
-    os.system('mm.cmd % P' % mm_name)
+    os.system('mm.cmd %s P' % mm_name)
 
     src_msi = os.path.join('out', mm_name, 'MSI', 'sk1.msi')
     if not os.path.isfile(src_msi):
