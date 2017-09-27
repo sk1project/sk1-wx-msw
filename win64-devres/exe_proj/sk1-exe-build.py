@@ -19,7 +19,7 @@ glob(r'C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90
 
 INCLUDES = ['__future__', 'array', 'base64', 'binascii', 'cgi',
 'codecs', 'collections', 'colorsys', 'copy', 'datetime',
-'errno', 'inspect', 'itertools', 'io', 'fractions', 'functools',
+'errno', 'importlib', 'inspect', 'itertools', 'io', 'fractions', 'functools',
 'future_builtins', 'hashlib', 'logging', 'locale', 'math', 'marshal', 'md5',
 'mmap', 'new', 'numbers', 'operator', 'os', 'pickle', 'cPickle', 'platform',
 'pipes', 'pprint', 'random', 're', 'shutil', 'sets', 'shlex',
