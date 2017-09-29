@@ -11,6 +11,7 @@ elif len(sys.argv) == 2:
 print SCRIPT
 
 from distutils.core import setup
+import py2exe
 
 from glob import glob
 
