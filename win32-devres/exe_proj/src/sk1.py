@@ -34,6 +34,10 @@ def get_path_var():
 
 
 cur_path = os.getcwd()
+
+sys.path.insert(0, os.path.join(cur_path, 'libs'))
+sys.path.insert(0, os.path.join(cur_path, 'stdlib'))
+
 bindir = os.path.join(cur_path, 'dlls') + os.pathsep
 magickdir = os.path.join(cur_path, 'dlls', 'modules') + os.pathsep
 
@@ -43,9 +47,6 @@ os.environ["MAGICK_CODER_MODULE_PATH"] = magickdir
 os.environ["MAGICK_CODER_FILTER_PATH"] = magickdir
 os.environ["MAGICK_CONFIGURE_PATH"] = magickdir
 os.environ["MAGICK_HOME"] = magickdir
-
-sys.path.insert(0, os.path.join(cur_path, 'libs'))
-sys.path.insert(0, os.path.join(cur_path, 'stdlib'))
 
 os.chdir(os.path.join(cur_path, 'dlls'))
 
