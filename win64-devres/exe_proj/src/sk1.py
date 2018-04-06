@@ -1,6 +1,6 @@
 #! /usr/bin/python
 #
-# 	Copyright (C) 2016 by Igor E. Novikov
+# 	Copyright (C) 2016-2018 by Igor E. Novikov
 #
 # 	This program is free software: you can redistribute it and/or modify
 # 	it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@ RESTRICTED = ('UniConvertor', 'Python', 'ImageMagick')
 
 
 def get_path_var():
-    path = '' + os.environ["PATH"]
-    paths = path.split(os.pathsep)
-    ret = []
-    for path in paths:
-        allow = True
+    paths = os.environ["PATH"].split(os.pathsep)
+
+    def check_path(path):
         for item in RESTRICTED:
-            if item in path: allow = False
-        if allow: ret.append(path)
-    return os.pathsep.join(ret)
+            if item in path:
+                return False
+        return True
+
+    return os.pathsep.join([path for path in paths if check_path(path)])
 
 
 cur_path = os.getcwd()
@@ -42,6 +42,7 @@ bindir = os.path.join(cur_path, 'dlls') + os.pathsep
 magickdir = os.path.join(cur_path, 'dlls', 'modules') + os.pathsep
 
 os.environ["PATH"] = magickdir + bindir + get_path_var()
+# ImageMagick non-ascii path issue fix
 magickdir = magickdir.decode(sys.getfilesystemencoding()).encode('utf-8')
 os.environ["MAGICK_CODER_MODULE_PATH"] = magickdir
 os.environ["MAGICK_CODER_FILTER_PATH"] = magickdir
