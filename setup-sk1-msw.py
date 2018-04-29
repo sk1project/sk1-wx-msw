@@ -29,6 +29,7 @@ Usage:
  Help on available distribution formats: --help-formats
 """
 
+import datetime
 import os
 import platform
 import shutil
