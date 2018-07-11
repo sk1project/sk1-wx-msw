@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER sk1.project.org@gmail.com
  
-RUN apt-get update && apt-get install -y gcc sudo python-dev && apt-get clean
+RUN apt-get update && apt-get install -y gcc sudo python-dev msitools wixl && apt-get clean
 
 RUN mkdir -p /win32-devres/
 RUN mkdir -p /win64-devres/
