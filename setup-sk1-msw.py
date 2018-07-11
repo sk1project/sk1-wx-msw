@@ -38,7 +38,8 @@ from zipfile import ZIP_DEFLATED
 
 sys.path.insert(0, '../sk1-wx')
 
-import buildutils
+import utils
+from utils import fsutils, build
 
 sys.path.insert(1, os.path.abspath('../sk1-wx/src'))
 
@@ -122,7 +123,7 @@ include_path = os.path.join(res_path, 'include')
 lib_path = [os.path.join(res_path, 'libs'), ]
 modules = []
 
-dirs = buildutils.get_dirs_tree('../sk1-wx/src/sk1/share')
+dirs = utils.fsutils.get_dirs_tree('../sk1-wx/src/sk1/share')
 share_dirs = []
 for item in dirs:
     path = item.split('/sk1/')[1]
@@ -188,8 +189,8 @@ setup(
     download_url=DOWNLOAD_URL,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
-    packages=buildutils.get_source_structure(abs_path, excludes=EXCLUDES),
-    package_dir=buildutils.get_package_dirs(abs_path, excludes=EXCLUDES),
+    packages=build.get_source_structure(abs_path, excludes=EXCLUDES),
+    package_dir=build.get_package_dirs(abs_path, excludes=EXCLUDES),
     package_data=package_data,
     data_files=data_files,
     scripts=scripts,
@@ -199,7 +200,7 @@ setup(
 # .py source compiling
 ############################################################
 if not UPDATE_MODULES:
-    buildutils.compile_sources()
+    build.compile_sources()
 
 ############################################################
 # This section for developing purpose only
@@ -208,7 +209,7 @@ if not UPDATE_MODULES:
 # into package directory
 ############################################################
 if UPDATE_MODULES:
-    buildutils.copy_modules(modules, src_path)
+    build.copy_modules(modules, src_path)
 
 ############################################################
 # Implementation of bdist_portable command
@@ -307,4 +308,4 @@ if MSI_PACKAGE:
     shutil.rmtree('out', True)
 
 if CLEAR_BUILD:
-    buildutils.clear_msw_build()
+    build.clear_msw_build()
