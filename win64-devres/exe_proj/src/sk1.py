@@ -33,7 +33,9 @@ def get_path_var():
     return os.pathsep.join([path for path in paths if check_path(path)])
 
 
-cur_path = os.getcwd()
+cur_path = os.path.dirname(sys.argv[0])
+if not cur_path or not os.path.exists(cur_path):
+    cur_path = os.getcwd()
 
 sys.path.insert(0, os.path.join(cur_path, 'libs'))
 sys.path.insert(0, os.path.join(cur_path, 'stdlib'))
