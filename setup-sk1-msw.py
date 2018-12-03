@@ -43,7 +43,7 @@ from utils import fsutils, build
 
 sys.path.insert(1, os.path.abspath('../sk1-wx/src'))
 
-from sk1 import appconst
+from uniconvertor import appconst
 
 
 def get_os_prefix():
