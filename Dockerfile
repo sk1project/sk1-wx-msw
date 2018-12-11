@@ -11,12 +11,16 @@ RUN mkdir -p /win64-devres/
 COPY win32-devres/pyd/ /win32-devres/pyd/
 COPY win32-devres/portable.zip /win32-devres/
 COPY win32-devres/sk1_msi.zip /win32-devres/
+COPY win32-devres/sk1_portable.zip /win32-devres/
 COPY win32-devres/uc2.zip /win32-devres/
+COPY win32-devres/wx.zip /win32-devres/
 
 COPY win64-devres/pyd/ /win64-devres/pyd/
 COPY win64-devres/portable.zip /win64-devres/
 COPY win64-devres/sk1_msi.zip /win64-devres/
+COPY win64-devres/sk1_portable.zip /win64-devres/
 COPY win64-devres/uc2.zip /win64-devres/
+COPY win64-devres/wx.zip /win64-devres/
 
 COPY sk1.ico /win32-devres/
 COPY gpl_v3.rtf /win32-devres/
