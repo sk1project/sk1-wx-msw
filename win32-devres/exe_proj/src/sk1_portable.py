@@ -53,6 +53,10 @@ os.environ["MAGICK_HOME"] = magickdir
 
 os.chdir(os.path.join(cur_path, 'dlls'))
 
+for item in range(1, len(sys.argv)):
+    if not os.path.dirname(sys.argv[item]):
+        sys.argv[item] = os.path.join(os.getcwd(), sys.argv[item])
+
 import sk1
 
 # Passing cur_path we set portable version
