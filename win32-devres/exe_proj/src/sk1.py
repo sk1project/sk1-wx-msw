@@ -51,11 +51,11 @@ os.environ["MAGICK_CODER_FILTER_PATH"] = magickdir
 os.environ["MAGICK_CONFIGURE_PATH"] = magickdir
 os.environ["MAGICK_HOME"] = magickdir
 
-os.chdir(os.path.join(cur_path, 'dlls'))
-
 for item in range(1, len(sys.argv)):
     if not os.path.dirname(sys.argv[item]):
         sys.argv[item] = os.path.join(os.getcwd(), sys.argv[item])
+
+os.chdir(os.path.join(cur_path, 'dlls'))
 
 import sk1
 
