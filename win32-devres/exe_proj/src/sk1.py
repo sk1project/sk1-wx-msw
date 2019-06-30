@@ -35,7 +35,7 @@ def get_path_var():
 
 cur_path = os.path.dirname(sys.executable)
 if not cur_path or not os.path.exists(cur_path):
-    cur_path = os.getcwd()
+    cur_path = os.getcwdu()
 
 sys.path.insert(0, os.path.join(cur_path, 'libs'))
 sys.path.insert(0, os.path.join(cur_path, 'stdlib'))
@@ -51,9 +51,10 @@ os.environ["MAGICK_CODER_FILTER_PATH"] = magickdir
 os.environ["MAGICK_CONFIGURE_PATH"] = magickdir
 os.environ["MAGICK_HOME"] = magickdir
 
-for item in range(1, len(sys.argv)):
-    if not os.path.dirname(sys.argv[item]):
-        sys.argv[item] = os.path.join(os.getcwd(), sys.argv[item])
+from uc2.utils import fsutils, msw_utils
+
+msw_utils.unicode_sys_argv()
+fsutils.normalize_sys_argv()
 
 os.chdir(os.path.join(cur_path, 'dlls'))
 

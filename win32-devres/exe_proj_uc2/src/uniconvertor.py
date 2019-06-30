@@ -51,7 +51,12 @@ os.environ["MAGICK_CODER_FILTER_PATH"] = magickdir
 os.environ["MAGICK_CONFIGURE_PATH"] = magickdir
 os.environ["MAGICK_HOME"] = magickdir
 
-cwd = os.getcwd()
+from uc2.utils import fsutils, msw_utils
+
+msw_utils.unicode_sys_argv()
+fsutils.normalize_sys_argv()
+
+cwd = os.getcwdu()
 os.chdir(os.path.join(cur_path, 'dlls'))
 
 import uc2
