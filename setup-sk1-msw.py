@@ -2,7 +2,7 @@
 #
 #  Setup script for sK1 2.x on MS Windows
 #
-#  Copyright (C) 2016-2018 by Igor E. Novikov
+#  Copyright (C) 2016-2018 by Ihor E. Novikov
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Usage: 
+Usage:
 --------------------------------------------------------------------------
  to build package:	   python setup-sk1-msw.py build
 --------------------------------------------------------------------------
@@ -85,7 +85,7 @@ CLEAR_BUILD = False
 NAME = appconst.APPNAME
 VERSION = appconst.VERSION + appconst.REVISION
 DESCRIPTION = 'Vector graphics editor for prepress'
-AUTHOR = 'Igor E. Novikov'
+AUTHOR = 'Ihor E. Novikov'
 AUTHOR_EMAIL = 'sk1.project.org@gmail.com'
 MAINTAINER = AUTHOR
 MAINTAINER_EMAIL = AUTHOR_EMAIL
@@ -111,7 +111,7 @@ Adobe Illustrator, or Freehand. First of all sK1 is oriented for prepress
 industry, therefore works with CMYK colorspace and produces CMYK-based PDF 
 and postscript output.
 sK1 Project (https://sk1project.net),
-Copyright (C) 2004-%s by Igor E. Novikov 
+Copyright (C) 2004-%s by Ihor E. Novikov 
 ''' % str(datetime.date.today().year)
 
 ############################################################
